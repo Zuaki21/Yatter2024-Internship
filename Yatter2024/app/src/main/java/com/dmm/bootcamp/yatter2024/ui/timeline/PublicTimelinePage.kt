@@ -25,6 +25,7 @@ fun PublicTimelinePage(
         isRefreshing = uiState.isRefreshing,
         onRefresh = viewModel::onRefresh,
         onClickPost = viewModel::onClickPost,
+        onClickLogin = viewModel::onClickLogin,
     )
 
     val destination by viewModel.destination.collectAsStateWithLifecycle()

@@ -1,5 +1,7 @@
 package com.dmm.bootcamp.yatter2024.ui.timeline
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -10,11 +12,13 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.pullrefresh.PullRefreshDefaults
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
@@ -27,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.dmm.bootcamp.yatter2024.ui.theme.Yatter2024Theme
 import com.dmm.bootcamp.yatter2024.ui.timeline.bindingmodel.StatusBindingModel
+import java.time.LocalDateTime
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -36,10 +41,20 @@ fun PublicTimelineTemplate(
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
     onClickPost: () -> Unit,
+    onClickLogin: () -> Unit,
 ) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("タイムライン") })
+            TopAppBar(title = { Text("タイムライン") },
+                navigationIcon = {
+                    IconButton(onClick = onClickLogin) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "戻る"
+                        )
+                    }
+                },)
+
         },
         floatingActionButton = {
             FloatingActionButton(onClick = onClickPost) {
@@ -78,6 +93,7 @@ fun PublicTimelineTemplate(
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 private fun PublicTimelineTemplatePreview() {
@@ -91,6 +107,7 @@ private fun PublicTimelineTemplatePreview() {
                         username = "username1",
                         avatar = null,
                         content = "preview content1",
+                        createdAt = LocalDateTime.now(),
                         attachmentMediaList = listOf()
                     ),
                     StatusBindingModel(
@@ -99,6 +116,7 @@ private fun PublicTimelineTemplatePreview() {
                         username = "username2",
                         avatar = null,
                         content = "preview content2",
+                        createdAt = LocalDateTime.now(),
                         attachmentMediaList = listOf()
                     ),
                 ),
@@ -106,6 +124,7 @@ private fun PublicTimelineTemplatePreview() {
                 isRefreshing = false,
                 onRefresh = {},
                 onClickPost = {},
+                onClickLogin = {},
             )
         }
     }

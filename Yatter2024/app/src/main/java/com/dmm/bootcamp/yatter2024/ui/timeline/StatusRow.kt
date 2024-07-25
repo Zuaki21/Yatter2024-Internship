@@ -1,5 +1,7 @@
 package com.dmm.bootcamp.yatter2024.ui.timeline
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,8 +35,11 @@ import com.dmm.bootcamp.yatter2024.R
 import com.dmm.bootcamp.yatter2024.ui.theme.Yatter2024Theme
 import com.dmm.bootcamp.yatter2024.ui.timeline.bindingmodel.MediaBindingModel
 import com.dmm.bootcamp.yatter2024.ui.timeline.bindingmodel.StatusBindingModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun StatusRow(
     statusBindingModel: StatusBindingModel,
@@ -99,9 +104,17 @@ fun StatusRow(
                 }
             }
         }
+        Text(
+            //(yyyy/MM/dd HH:mm)の形式で表示
+            text = statusBindingModel.createdAt.format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = androidx.compose.ui.text.style.TextAlign.End,
+            style = MaterialTheme.typography.body2
+        )
     }
 }
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Preview
 @Composable
 private fun StatusRowPreview() {
@@ -114,6 +127,7 @@ private fun StatusRowPreview() {
                     username = "mitohato14",
                     avatar = "https://avatars.githubusercontent.com/u/19385268?v=4",
                     content = "preview content",
+                    createdAt = LocalDateTime.now(),
                     attachmentMediaList = listOf(
                         MediaBindingModel(
                             id = "id",

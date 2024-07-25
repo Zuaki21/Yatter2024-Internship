@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
 import com.dmm.bootcamp.yatter2024.ui.login.LoginDestination
 import com.dmm.bootcamp.yatter2024.ui.post.PostDestination
+import com.dmm.bootcamp.yatter2024.ui.register.RegisterDestination
 import com.dmm.bootcamp.yatter2024.ui.timeline.PublicTimelineDestination
 import org.koin.androidx.compose.getViewModel
 
@@ -39,6 +40,7 @@ fun MainApp(
                 startDestination = startDestination.route
             ) {
                 LoginDestination.createNode(this)
+                RegisterDestination.createNode(this)
                 PublicTimelineDestination.createNode(this)
                 PostDestination.createNode(this)
             }

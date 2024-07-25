@@ -13,6 +13,7 @@ object StatusConverter {
             username = status.account.username.value,
             avatar = status.account.avatar?.toString(),
             content = status.content,
+            createdAt = status.createdAt,
             attachmentMediaList = MediaConverter.convertToBindingModel(status.attachmentMediaList)
         )
 }

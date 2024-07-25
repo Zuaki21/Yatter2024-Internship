@@ -1,5 +1,6 @@
 package com.dmm.bootcamp.yatter2024.ui.post
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.Send
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -54,10 +56,11 @@ fun PostTemplate(
                     }
                 },
                 actions = {
-                    IconButton(onClick = onClickPost) {
+                    IconButton(onClick = onClickPost, enabled = canPost) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.Send,
-                            contentDescription = "ツイート")
+                            contentDescription = "ツイート"
+                        )
                     }
                 }
             )
@@ -73,12 +76,21 @@ fun PostTemplate(
                     .fillMaxSize()
                     .padding(it)
             ) {
-                AsyncImage(
-                    model = postBindingModel.avatarUrl,
-                    contentDescription = "アバター画像",
-                    modifier = Modifier.size(64.dp),
-                    contentScale = ContentScale.Crop
-                )
+                Log.d("PostTemplate", "avatarUrl: ${postBindingModel.avatarUrl}")
+                if (postBindingModel.avatarUrl == null) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "アバター画像",
+                        modifier = Modifier.size(64.dp),
+                    )
+                } else {
+                    AsyncImage(
+                        model = postBindingModel.avatarUrl,
+                        contentDescription = "アバター画像",
+                        modifier = Modifier.size(64.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                }
 
                 Column(
                     horizontalAlignment = Alignment.End,
